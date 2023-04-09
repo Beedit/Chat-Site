@@ -2,9 +2,22 @@ require('dotenv').config()
 const express = require("express")
 const path = require("path")
 const { compileCss } = require("./js/compileCss")
+const app = express()
+const http = require("http")
+const server = http.createServer(app)
+const { Server } = require("socket.io")
+const io = new Server(server)
+
+/*
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+*/
 
 const port = process.env.PORT
-const app = express()
 
 compileCss({ src: path.join(__dirname, 'views/style'), dest: path.join(__dirname, 'public')})
 
@@ -26,6 +39,10 @@ app.get("/", (req, res) => {
     res.render("main")
 })
 
+app.post("/message", (req, res) => {
+    console.log(req.body.message)
+    res.send("Recieved\n")
+})
 
 // 404 not found
 app.get("*", (req, res) => {
@@ -36,8 +53,20 @@ app.get("*", (req, res) => {
 app.all("*", (req, res) => { res.send(`${req.method} not supported\n`)})
 
 
-// Actually start it!!!
+io.on("connection", (socket) => {
+    console.log("User connected");
 
-app.listen(port, () => {
+    socket.on("disconnect", () => {
+        console.log("User disconnected")
+    })
+
+    socket.on("msg", (msg) => {
+        console.log('message: ' + msg);
+        io.emit("msg", msg)
+      });
+});
+
+// Actually start it!!!
+server.listen(port, () => {
     console.log(`Listening on port ${port}`)
 })
