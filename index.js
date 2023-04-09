@@ -44,7 +44,7 @@ app.get("*", (req, res) => {
 // Pings a response back to unused stuff
 app.all("*", (req, res) => { res.send(`${req.method} not supported\n`)})
 
-
+// Socket.io Stuff
 io.on("connection", (socket) => {
     console.log("User connected");
 
