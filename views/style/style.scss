@@ -3,12 +3,11 @@ body {
     overflow: hidden;
     font-family: "Ubuntu", sans-serif;
     color: white;
-    text-align: center;
 }
 
 h1{
     text-align: center;
-    padding: 1vh;
+    padding: 0.5rem;
     &.error-page{
         color: #ffb9e7;
         &:hover{
@@ -25,4 +24,34 @@ h2 {
     &.error-page{
         color: #d4d4d4;
     }
+}
+
+.messageBox {
+    display: grid;
+    row-gap: 1rem;
+    padding: 1rem;
+}
+
+.messageContainer {
+    background-color: #444444;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1rem;
+    border-radius: 15px;
+}
+
+.username {
+    display: inherit;
+    font-size: 0.9rem;
+}
+
+.time {
+    display: inherit;
+    font-size: 0.7rem;
+}
+.message {
+    display: inherit;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    font-size: 1.1rem;
 }
