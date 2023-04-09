@@ -1,0 +1,19 @@
+{
+  "name": "chat-site",
+  "version": "1.0.0",
+  "description": "Chat Site ",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Beedit/Chat-Site.git"
+  },
+  "author": "beedit",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Beedit/Chat-Site/issues"
+  },
+  "homepage": "https://github.com/Beedit/Chat-Site#readme"
+}
