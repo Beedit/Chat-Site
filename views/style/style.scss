@@ -1,0 +1,28 @@
+body {
+    background-color: #1e1e1e;
+    overflow: hidden;
+    font-family: "Ubuntu", sans-serif;
+    color: white;
+    text-align: center;
+}
+
+h1{
+    text-align: center;
+    padding: 1vh;
+    &.error-page{
+        color: #ffb9e7;
+        &:hover{
+            color:pink;
+        }
+    }
+    &:hover{
+        color:#d4d4d4;
+    }
+}
+
+h2 {
+    text-align: center;
+    &.error-page{
+        color: #d4d4d4;
+    }
+}
