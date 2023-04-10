@@ -1,8 +1,10 @@
 let username = prompt("Username")
 const socket = io();
 const messageBox = document.getElementById("messageBox") 
+const userList = document.getElementById("userList")
 
 socket.emit("username", username)
+socket.emit("getUsers")
 
 const createMsg = (msg, username, toAppend) => {
   let container = document.createElement("div")
@@ -29,6 +31,12 @@ const createMsg = (msg, username, toAppend) => {
   
 }
 
+const createUser = (username) => {
+  let container = document.createElement("div")
+  container.innerText = username
+  return container
+}
+
 form.addEventListener('submit', (err) => {
     err.preventDefault();
     if (input.value) {
@@ -52,3 +60,15 @@ socket.on("userLeft", () => {
   createMsg("User Left", "", messageBox)
   window.scrollTo(0, document.body.scrollHeight);
 })
+
+socket.on("disconnect", () => {
+  window.location.reload()
+})
+
+socket.on("userList", (userLst) => {
+  userList.innerHTML = ""
+  for(i in userLst){
+    userList.append(createUser(userLst[i]))
+  }
+})
+

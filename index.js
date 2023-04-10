@@ -7,7 +7,7 @@ const http = require("http")
 const server = http.createServer(app)
 const { Server } = require("socket.io")
 const io = new Server(server)
-
+const { remove, randomID } = require("./js/helpers.js")
 
 const port = process.env.PORT
 
@@ -31,10 +31,6 @@ app.get("/", (req, res) => {
     res.render("main")
 })
 
-app.post("/message", (req, res) => {
-    console.log(req.body.message)
-    res.send("Recieved\n")
-})
 
 // 404 not found
 app.get("*", (req, res) => {
@@ -45,13 +41,20 @@ app.get("*", (req, res) => {
 app.all("*", (req, res) => { res.send(`${req.method} not supported\n`)})
 
 // Socket.io Stuff
+
+let users = []
+
 io.on("connection", (socket) => {
-    let uname = ""
+    let uname = "Unknown User " + randomID(10)
     console.log("User connected");
 
-    socket.on("disconnect", (a, b) => {
+    users.push(uname);
+
+    socket.on("disconnect", () => {
         console.log(`${uname} disconnected`)
         io.emit("userLeft")
+        users = remove(users, uname)
+        io.emit("userList", users)
     })
 
     socket.on("msg", (msg) => {
@@ -60,9 +63,18 @@ io.on("connection", (socket) => {
       });
     
     socket.on("username", (username) => {
-        io.emit("userJoin", username)
-        uname = username
-        console.log(`A user set ${uname} as their username`)
+        if (username == "") {
+            socket.disconnect()
+        } else {
+            io.emit("userJoin", username)
+            users[users.indexOf(uname)] = username
+            uname = username
+            console.log(`A user set ${uname} as their username`)
+        }
+    })
+
+    socket.on("getUsers", () => {
+        io.emit("userList", users)
     })
 });
 
@@ -70,3 +82,12 @@ io.on("connection", (socket) => {
 server.listen(port, () => {
     console.log(`Listening on port ${port}`)
 })
+
+/*
+user0
+user0 user1
+user0 name2
+name2
+name2 user1
+user1
+user1 user1 */
