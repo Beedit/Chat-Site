@@ -19,5 +19,4 @@ Some funny chat site im throwing together to see if i **can**
 Should be running!
 
 # Known problems
-- 2 users can join with the same name
 - it bad

@@ -43,9 +43,9 @@ form.addEventListener('submit', (err) => {
     err.preventDefault();
     if (input.value) {
       if (encryptToggle.checked){
-        socket.emit("msg", {msg: CryptoJS.AES.encrypt(input.value, keyBox.value).toString(), username : username, encrypted: true});
+        socket.emit("msg", {msg: CryptoJS.AES.encrypt(input.value, keyBox.value).toString(), encrypted: true});
       } else {
-        socket.emit("msg", {msg: input.value, username : username, encrypted: false});
+        socket.emit("msg", {msg: input.value, encrypted: false});
       }
         input.value = "";
     }

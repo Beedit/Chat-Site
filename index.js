@@ -58,13 +58,14 @@ io.on("connection", (socket) => {
     })
 
     socket.on("msg", (msg) => {
-        io.emit("msg", {msg: msg.msg, username: msg.username, encrypted: msg.encrypted})
+        io.emit("msg", {msg: msg.msg, username: uname, encrypted: msg.encrypted})
       });
     
     socket.on("username", (username) => {
         if (username == "") {
             socket.disconnect()
         } else {
+            while (users.includes(username)){ username += "_" }
             io.emit("userJoin", username)
             users[users.indexOf(uname)] = username
             uname = username
