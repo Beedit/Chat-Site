@@ -43,11 +43,13 @@ h2.error-page {
 .username {
   display: inherit;
   font-size: 0.9rem;
+  color: white;
 }
 
 .time {
   display: inherit;
   font-size: 0.7rem;
+  color: grey;
 }
 
 .message {
@@ -55,4 +57,11 @@ h2.error-page {
   grid-column-start: 1;
   grid-column-end: 3;
   font-size: 1.1rem;
+}
+
+.online {
+  position: fixed;
+  display: grid;
+  top: 0;
+  right: 0;
 }

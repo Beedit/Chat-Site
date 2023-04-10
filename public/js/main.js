@@ -1,14 +1,17 @@
+let username = prompt("Username")
 const socket = io();
 const messageBox = document.getElementById("messageBox") 
 
-const createMsg = (msg, toAppend) => {
+socket.emit("username", username)
+
+const createMsg = (msg, username, toAppend) => {
   let container = document.createElement("div")
-  let username = document.createElement("div")
+  let uname = document.createElement("div")
   let time = document.createElement("div")
   let message = document.createElement("div")
 
   container.className = "messageContainer"
-  username.className = "username"
+  uname.className = "username"
   time.className = "time"
   message.className = "message"
 
@@ -16,9 +19,9 @@ const createMsg = (msg, toAppend) => {
 
   message.innerText = msg
   time.innerText = `${now.getHours()}:${now.getMinutes()}`
-  username.innerText = "username not implemented lmao"
+  uname.innerText = username
 
-  container.appendChild(username)
+  container.appendChild(uname)
   container.appendChild(time)
   container.appendChild(message)
 
@@ -29,13 +32,23 @@ const createMsg = (msg, toAppend) => {
 form.addEventListener('submit', (err) => {
     err.preventDefault();
     if (input.value) {
-      socket.emit("msg", input.value);
+      socket.emit("msg", {msg: input.value, username : username});
       input.value = "";
     }
 });
 
 socket.on("msg", (msg) => {
     // why doesnt it let me do let x = document.createElement("li").textContent = msg; ??? probably some actual reason that i dont know or are not smart enough to realise
-    createMsg(msg, messageBox)
+    createMsg(msg.msg, msg.username, messageBox)
     window.scrollTo(0, document.body.scrollHeight);
+})
+
+socket.on("userJoin", (username) => {
+  createMsg("User joined", username, messageBox)
+  window.scrollTo(0, document.body.scrollHeight);
+})
+
+socket.on("userLeft", () => {
+  createMsg("User Left", "", messageBox)
+  window.scrollTo(0, document.body.scrollHeight);
 })

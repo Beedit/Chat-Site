@@ -50,12 +50,17 @@ io.on("connection", (socket) => {
 
     socket.on("disconnect", () => {
         console.log("User disconnected")
+        io.emit("userLeft")
     })
 
     socket.on("msg", (msg) => {
-        console.log('message: ' + msg);
-        io.emit("msg", msg)
+        console.log(`${msg.username}: ${msg.msg}`);
+        io.emit("msg", {msg: msg.msg, username: msg.username})
       });
+    
+    socket.on("username", (username) => {
+        io.emit("userJoin", username)
+    })
 });
 
 // Actually start it!!!
