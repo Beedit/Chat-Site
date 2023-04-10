@@ -58,7 +58,6 @@ io.on("connection", (socket) => {
     })
 
     socket.on("msg", (msg) => {
-        console.log(`${msg.username}: ${msg.msg}`);
         io.emit("msg", {msg: msg.msg, username: msg.username, encrypted: msg.encrypted})
       });
     
