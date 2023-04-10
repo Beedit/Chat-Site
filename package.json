@@ -22,7 +22,6 @@
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
-    "nodemon": "^2.0.22",
     "path": "^0.12.7",
     "sass": "^1.61.0",
     "socket.io": "^4.6.1"
@@ -31,5 +30,8 @@
     "ignore": [
       "./public/"
     ]
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
