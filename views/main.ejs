@@ -4,7 +4,13 @@
 </head>
 <html>
     <div class="online" id="userList">
-        test
+    </div>
+    <div class="encryptionToggle">
+        Encryption Toggle:
+        <input type="checkbox" id="encryptionToggle">
+    </div>
+    <div class="password">
+        <input id="key" type="password">
     </div>
     <div id="messageBox" class="messageBox">
     </div>
@@ -14,4 +20,5 @@
       </form>
 </html>
 <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
 <script src="./js/main.js"></script>

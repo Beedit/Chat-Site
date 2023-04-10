@@ -59,7 +59,7 @@ io.on("connection", (socket) => {
 
     socket.on("msg", (msg) => {
         console.log(`${msg.username}: ${msg.msg}`);
-        io.emit("msg", {msg: msg.msg, username: msg.username})
+        io.emit("msg", {msg: msg.msg, username: msg.username, encrypted: msg.encrypted})
       });
     
     socket.on("username", (username) => {
@@ -82,12 +82,3 @@ io.on("connection", (socket) => {
 server.listen(port, () => {
     console.log(`Listening on port ${port}`)
 })
-
-/*
-user0
-user0 user1
-user0 name2
-name2
-name2 user1
-user1
-user1 user1 */

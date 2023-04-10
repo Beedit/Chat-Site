@@ -2,6 +2,8 @@ let username = prompt("Username")
 const socket = io();
 const messageBox = document.getElementById("messageBox") 
 const userList = document.getElementById("userList")
+const keyBox = document.getElementById("key")
+const encryptToggle = document.getElementById("encryptionToggle")
 
 socket.emit("username", username)
 socket.emit("getUsers")
@@ -40,15 +42,22 @@ const createUser = (username) => {
 form.addEventListener('submit', (err) => {
     err.preventDefault();
     if (input.value) {
-      socket.emit("msg", {msg: input.value, username : username});
-      input.value = "";
+      if (encryptToggle.checked){
+        socket.emit("msg", {msg: CryptoJS.AES.encrypt(input.value, keyBox.value).toString(), username : username, encrypted: true});
+      } else {
+        socket.emit("msg", {msg: input.value, username : username, encrypted: false});
+      }
+        input.value = "";
     }
 });
 
 socket.on("msg", (msg) => {
-    // why doesnt it let me do let x = document.createElement("li").textContent = msg; ??? probably some actual reason that i dont know or are not smart enough to realise
+  if (msg.encrypted) {
+    createMsg(CryptoJS.AES.decrypt(msg.msg, keyBox.value).toString(CryptoJS.enc.Utf8), msg.username, messageBox)
+  } else {
     createMsg(msg.msg, msg.username, messageBox)
-    window.scrollTo(0, document.body.scrollHeight);
+  }
+  window.scrollTo(0, document.body.scrollHeight);
 })
 
 socket.on("userJoin", (username) => {

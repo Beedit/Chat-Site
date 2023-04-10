@@ -65,3 +65,16 @@ h2.error-page {
   top: 0;
   right: 0;
 }
+
+.password {
+  position: fixed;
+  display: grid;
+  bottom: 0;
+  right: 0;
+}
+
+.encryptionToggle {
+  position: fixed;
+  bottom: 2rem;
+  right: 0;
+}
