@@ -46,10 +46,11 @@ app.all("*", (req, res) => { res.send(`${req.method} not supported\n`)})
 
 // Socket.io Stuff
 io.on("connection", (socket) => {
+    let uname = ""
     console.log("User connected");
 
-    socket.on("disconnect", () => {
-        console.log("User disconnected")
+    socket.on("disconnect", (a, b) => {
+        console.log(`${uname} disconnected`)
         io.emit("userLeft")
     })
 
@@ -60,6 +61,8 @@ io.on("connection", (socket) => {
     
     socket.on("username", (username) => {
         io.emit("userJoin", username)
+        uname = username
+        console.log(`A user set ${uname} as their username`)
     })
 });
 
