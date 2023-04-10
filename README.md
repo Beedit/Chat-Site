@@ -17,3 +17,7 @@ Some funny chat site im throwing together to see if i **can**
     npm run start
 ```
 Should be running!
+
+# Known problems
+- 2 users can join with the same name
+- it bad
